@@ -1,0 +1,17 @@
+name: e3nn
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - pytorch
+  - torchaudio
+  - torchvision
+  - matplotlib
+  - jupyter
+  - scipy
+  - mdtraj
+  - h5py
+  - deeptime
+  - rdkit
+  - seaborn
+prefix: /Users/riccardobeccaria/opt/anaconda3/envs/e3nn
