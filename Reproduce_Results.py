@@ -1,6 +1,6 @@
 
 import numpy as np
-import os
+#import os
 import random
 
 import numpy as np
@@ -677,7 +677,7 @@ net_ligand = SimpleNetwork(
 )
 min_val_filename_ligand="batch_size=128_activation_func_mlp_cmap=ELU_activation_func_mlp_atoms=ELU_n_nodes_mlp_cmap=500_n_nodes_mlp_atoms=1_n_layers_mlp_cmap=3_n_layers_mlp_atoms=1_max_radius_e3nn=1.0_n_layers_e3nn=3_lmax_e3nn=3_mul_e3nn=8_wd=0.0_n_epochs=200_constant=1.0"
 net_r_ligand = Autoencoder_cmap(net_ligand, 30, 9, 128, "ELU", 500, 3, device)
-net_r_ligand.load_state_dict(torch.load(os.path.join("./equivariant_autoencoder",min_val_filename_ligand,"model_val.pt"), map_location=torch.device(device)))
+net_r_ligand.load_state_dict(torch.load("./equivariant_autoencoder/"+min_val_filename_ligand+"/model_val.pt", map_location=torch.device(device)))
 my_set_for_filter_ligand=np.load("./all_datasets/filters_names_bins/my_set_for_filter_lig.npy")
 my_filter_ligand=np.load("./all_datasets/filters_names_bins/my_filter_lig.npy", allow_pickle=True)
 Name_list=np.load("./all_datasets/filters_names_bins/name_ligand.npy")
