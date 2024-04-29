@@ -22,7 +22,7 @@ import torch
 from torch.utils.data import TensorDataset, DataLoader
 
 from e3nn.nn.models.v2103.gate_points_networks import SimpleNetwork
-from Autoencoder import RSN_with_label, RSN_insto, Autoencoder_cmap
+from Autoencoder import Autoencoder_cmap
 import torch
 import mdtraj as md
 
