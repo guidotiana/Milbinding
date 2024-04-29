@@ -1,6 +1,6 @@
 
 import numpy as np
-#import os
+import os
 import random
 
 import numpy as np
@@ -39,11 +39,11 @@ print("Evaluating the correlation between the encoding matrix")
 print("and the dRMSD for different conformations of the ")
 print("pocket of 2FL2 protein obtained via MD simulations")
 
-Name_list=np.load("./all_datasets/filters_names_bins/name_pocket.npy")
-Bins_list_old=np.load("./all_datasets/filters_names_bins/bins_pocket.npy")
-latent_vec_pocket=np.load("./all_datasets/2FL2_md/latent_vec_pocket.npy")
-pocket_atoms=np.load("./all_datasets/2FL2_md/pocket_atoms.npy")
-real_diff=np.load("./all_datasets/2FL2_md/real_diff.npy")
+Name_list=np.load("./datasets_and_RFs/filters_bins_name_pocket.npy")
+Bins_list_old=np.load("./datasets_and_RFs/filters_bins_pocket.npy")
+latent_vec_pocket=np.load("./datasets_and_RFs/2FL2_md_latent_vec_pocket.npy")
+pocket_atoms=np.load("./datasets_and_RFs/2FL2_md_pocket_atoms.npy")
+real_diff=np.load("./datasets_and_RFs/2FL2_md_real_diff.npy")
 
 num_bins=2
 
@@ -122,11 +122,11 @@ print("and the Molecular Weight, Volume and Complexity of ligands")
 
 np.random.seed(seed=1)
 
-Name_list=np.load("./all_datasets/filters_names_bins/name_ligand.npy")
-Bins_list=np.load("./all_datasets/filters_names_bins/bins_ligand.npy")
-latent_vectors_all=np.load("./all_datasets/MUV/Properties/latent_vectors_all.npy",allow_pickle=True)
-names_atoms_all=np.load("./all_datasets/MUV/Properties/names_atoms_all.npy",allow_pickle=True)
-dict_prop=np.load("./all_datasets/MUV/Properties/dict_prop.npy",allow_pickle=True).item()
+Name_list=np.load("./datasets_and_RFs/filters_bins_name_ligand.npy")
+Bins_list=np.load("./datasets_and_RFs/filters_bins_ligand.npy")
+latent_vectors_all=np.load("./datasets_and_RFs/MUV_Properties_latent_vectors_all.npy",allow_pickle=True)
+names_atoms_all=np.load("./datasets_and_RFs/MUV_Properties_names_atoms_all.npy",allow_pickle=True)
+dict_prop=np.load("./datasets_and_RFs/MUV_Properties_dict_prop.npy",allow_pickle=True).item()
 
 num_bins=40
 
@@ -162,7 +162,7 @@ for prop in dict_prop:
         sns.set_theme()
         sns.reset_orig()
         plt.figure()
-        sns.scatterplot(dict_prop[prop], norm_matrixes,edgecolors="face", alpha=0.7)
+        sns.scatterplot(x=dict_prop[prop], y=norm_matrixes,edgecolors="face", alpha=0.7)
 
         plt.ylabel(r"$\lambda_M$", fontsize=20)
         if prop=="MolecularWeight":
@@ -207,9 +207,9 @@ device="cpu"
 print("----------------------------------------------------------------------------------------")
 print("Evaluating trained (shallow) Neural Network for predicting XlogP")
     
-matrixes=np.load("./all_datasets/MUV/Properties/matrixes_for_regression.npy")
-XlogPs = np.load("./all_datasets/MUV/Properties/xlogp_for_regression.npy")
-polarareas = np.load("./all_datasets/MUV/Properties/polararea_for_regression.npy")
+matrixes=np.load("./datasets_and_RFs/MUV_Properties_matrixes_for_regression.npy")
+XlogPs = np.load("./datasets_and_RFs/MUV_Properties_xlogp_for_regression.npy")
+polarareas = np.load("./datasets_and_RFs/MUV_Properties_polararea_for_regression.npy")
 
 indixes=np.arange(len(matrixes))
 np.random.shuffle(indixes)
@@ -248,7 +248,7 @@ val_set = DataLoader(val_load, batch_size=1, shuffle=True)
 
 
 net = FeedforwardNeuralNetModel(9*42,10,2,1, "Linear", 0.0)
-net.load_state_dict(torch.load("./all_datasets/MUV/Properties/regressor_models/xlogp/nn_val_xlogp.pt"))
+net.load_state_dict(torch.load("./datasets_and_RFs/MUV_Properties_regressor_models_nn_val_xlogp.pt"))
 net.to(device)
 net.eval()
 loss = nn.MSELoss(reduction='mean')
@@ -315,8 +315,8 @@ print(f"Validation set : Mean[|target - predicted| / target] = {value}")
 print("----------------------------------------------------------------------------------------")
 print("Evaluating trained (shallow) Neural Network for predicting Polar Surface Area")
 
-matrixes=np.load("./all_datasets/MUV/Properties/matrixes_for_regression.npy")
-polarareas = np.load("./all_datasets/MUV/Properties/polararea_for_regression.npy")
+matrixes=np.load("./datasets_and_RFs/MUV_Properties_matrixes_for_regression.npy")
+polarareas = np.load("./datasets_and_RFs/MUV_Properties_polararea_for_regression.npy")
 
 indixes=np.arange(len(matrixes))
 np.random.shuffle(indixes)
@@ -356,7 +356,7 @@ val_set = DataLoader(val_load, batch_size=1, shuffle=True)
 
 
 net = FeedforwardNeuralNetModel(9*42,10,1,1, "ELU", 0.0)
-net.load_state_dict(torch.load("./all_datasets/MUV/Properties/regressor_models/polararea/nn_val_polararea.pt"))
+net.load_state_dict(torch.load("./datasets_and_RFs/MUV_Properties_regressor_models_polararea_nn_val_polararea.pt"))
 net.to(device)
 net.eval()
 loss = nn.MSELoss(reduction='mean')
@@ -426,12 +426,12 @@ print("Evaluating the AUC score value for RF trained on DUDE")
 print("and tested on MUV")
 
 
-train_dataset_MUV=np.load("./all_datasets/MUV/training_matrix_MUV_10_bins.npz")
+train_dataset_MUV=np.load("./datasets_and_RFs/MUV_training_matrix_MUV_10_bins.npz")
 train_pock_MUV=train_dataset_MUV["pocket"]
-train_dataset_MUV=np.load("./all_datasets/MUV/training_matrix.npz")
+train_dataset_MUV=np.load("./datasets_and_RFs/MUV_training_matrix.npz")
 train_lig_MUV=train_dataset_MUV["ligand"]
 
-target_train_MUV=np.load("./all_datasets/MUV/target_train.npy")
+target_train_MUV=np.load("./datasets_and_RFs/MUV_target_train.npy")
 
 X_MUV=[]
 y_MUV=[]
@@ -441,12 +441,12 @@ for i in range(len(train_pock_MUV)):
     y_MUV.append(target_train_MUV[i])
 
 
-val_dataset_MUV=np.load("./all_datasets/MUV/validation_matrix_MUV_10_bins.npz")
+val_dataset_MUV=np.load("./datasets_and_RFs/MUV_validation_matrix_MUV_10_bins.npz")
 val_pock_MUV=val_dataset_MUV["pocket"]
-val_dataset_MUV=np.load("./all_datasets/MUV/validation_matrix.npz")
+val_dataset_MUV=np.load("./datasets_and_RFs/MUV_validation_matrix.npz")
 val_lig_MUV=val_dataset_MUV["ligand"]
 
-target_val_MUV=np.load("./all_datasets/MUV/target_val.npy")
+target_val_MUV=np.load("./datasets_and_RFs/MUV_target_val.npy")
 
 for i in range(len(val_pock_MUV)):
     X_MUV.append(np.concatenate((val_pock_MUV[i].reshape(-1), val_lig_MUV[i].reshape(-1))).reshape(-1))
@@ -454,7 +454,7 @@ for i in range(len(val_pock_MUV)):
     
 RF = RandomForestClassifier()
 
-with open("./final_random_forests/Best_DUDE_on_MUV_10bins/rf_test_MUV", "rb") as f:
+with open("./datasets_and_RFs/final_random_forests_Best_DUDE_on_MUV_10bins_rf_test_MUV", "rb") as f:
     RF = cPickle.load(f)
     
 y_pred_MUV=RF.predict(X_MUV)
@@ -477,13 +477,13 @@ np.random.seed(seed)
 random.seed(seed)
 
 
-indexes=np.load("./all_datasets/DUDE/indexes_val_repetitions_DUDE.npy")
+indexes=np.load("./datasets_and_RFs/indexes_val_repetitions_DUDE.npy")
 
-train_dataset=np.load("./all_datasets/DUDE/training_matrix.npz")
+train_dataset=np.load("./datasets_and_RFs/DUDE_training_matrix.npz")
 train_pock=train_dataset["pocket"]
 train_lig=train_dataset["ligand"]
 
-target_train=np.load("./all_datasets/DUDE/target_train.npy")
+target_train=np.load("./datasets_and_RFs/DUDE_target_train.npy")
 
 X_train=[]
 y_train=[]
@@ -493,11 +493,11 @@ for i in range(len(train_pock)):
     y_train.append(target_train[i])
     
     
-val_dataset=np.load("./all_datasets/DUDE/validation_matrix.npz")
+val_dataset=np.load("./datasets_and_RFs/DUDE_validation_matrix.npz")
 val_pock=val_dataset["pocket"]
 val_lig=val_dataset["ligand"]
 
-target_val=np.load("./all_datasets/DUDE/target_val.npy")
+target_val=np.load("./datasets_and_RFs/DUDE_target_val.npy")
 
 X_val=[]
 y_val=[]
@@ -516,13 +516,13 @@ for i in range(len(val_pock)):
             y_val.append(target_val[i])
             
 
-with open("./final_random_forests/Best_DUDE_on_DUDE_40bins/rf_train_NoRep", "rb") as f:
+with open("./datasets_and_RFs/final_random_forests_Best_DUDE_on_DUDE_40bins_rf_train_NoRep", "rb") as f:
     RF = cPickle.load(f)         
         
 y_pred_train=RF.predict(X_train)
 auc_train=roc_auc_score(y_train, y_pred_train)
             
-with open("./final_random_forests/Best_DUDE_on_DUDE_40bins/rf_val_NoRep", "rb") as f:
+with open("./datasets_and_RFs/final_random_forests_Best_DUDE_on_DUDE_40bins_rf_val_NoRep", "rb") as f:
     RF = cPickle.load(f)
     
 y_pred_val=RF.predict(X_val)
@@ -561,14 +561,14 @@ print("------------------------------------------------------------")
 print("Evaluating the AUC score value for RF trained on MUV")
 print("and tested on MUV (validation set)")
 
-indexes_MUV=np.load("./all_datasets/MUV/indexes_val_repetitions_MUV.npy")
+indexes_MUV=np.load("./datasets_and_RFs/indexes_val_repetitions_MUV.npy")
 
 
-train_dataset=np.load("./all_datasets/MUV/training_matrix.npz")
+train_dataset=np.load("./datasets_and_RFs/MUV_training_matrix.npz")
 train_pock=train_dataset["pocket"]
 train_lig=train_dataset["ligand"]
 
-target_train=np.load("./all_datasets/MUV/target_train.npy")
+target_train=np.load("./datasets_and_RFs/MUV_target_train.npy")
 
 X_train=[]
 y_train=[]
@@ -578,11 +578,11 @@ for i in range(len(train_pock)):
     y_train.append(target_train[i])
     
     
-val_dataset=np.load("./all_datasets/MUV/validation_matrix.npz")
+val_dataset=np.load("./datasets_and_RFs/MUV_validation_matrix.npz")
 val_pock=val_dataset["pocket"]
 val_lig=val_dataset["ligand"]
 
-target_val=np.load("./all_datasets/MUV/target_val.npy")
+target_val=np.load("./datasets_and_RFs/MUV_target_val.npy")
 
 X_val=[]
 y_val=[]
@@ -602,19 +602,19 @@ for i in range(len(val_pock)):
             
 
             
-with open("./final_random_forests/Best_MUV_on_MUV_40bins/rf_train_NoRep", "rb") as f:
+with open("./datasets_and_RFs/final_random_forests_Best_MUV_on_MUV_40bins_rf_train_NoRep", "rb") as f:
     RF = cPickle.load(f)
         
 y_pred_train=RF.predict(X_train)
 auc_train=roc_auc_score(y_train, y_pred_train)
 
-with open("./final_random_forests/Best_MUV_on_MUV_40bins/rf_val_NoRep", "rb") as f:
+with open("./datasets_and_RFs/final_random_forests_Best_MUV_on_MUV_40bins_rf_val_NoRep", "rb") as f:
     RF = cPickle.load(f)
 
 y_pred_val=RF.predict(X_val)
 auc_val=roc_auc_score(y_val, y_pred_val)
 
-print(f"AUC on MUV dataste train = {auc_train}; val = {auc_val}")
+print(f"AUC on MUV dataset train = {auc_train}; val = {auc_val}")
 
 positions = (0.5, 1.5)
 labels_x = ('0 real','1 real')
@@ -626,7 +626,7 @@ sns.heatmap(mat.T*100, annot=True,  cmap="viridis", fmt='.2f')
 plt.title("MUV training - RF", fontsize=15)
 plt.xticks(positions, labels_x, rotation=45)
 plt.yticks(positions, labels_y, rotation=45)
-plt.savefig("./images_results/Auc_score_muv_validation")
+plt.savefig("./images_results/Auc_score_muv_train")
 
 plt.figure()
 mat = metrics.confusion_matrix(y_val, y_pred_val, normalize='true')
@@ -654,15 +654,15 @@ print("Screening pocket 5exm from MUV with pockets from MUV")
 
 rf = RandomForestClassifier()
 
-with open('./final_random_forests/Best_MUV_on_MUV_40bins/rf_val_NoRep', 'rb') as f:
+with open('./datasets_and_RFs/final_random_forests_Best_MUV_on_MUV_40bins_rf_val_NoRep', 'rb') as f:
     rf = cPickle.load(f)
     
 device='cpu'
-matrixes_pock_val=np.load("./all_datasets/MUV/validation_matrix.npz")["pocket"]
-matrixes_pock_train=np.load("./all_datasets/MUV/training_matrix.npz")["pocket"]
-matrixes_lig_val=np.load("./all_datasets/MUV/validation_matrix.npz")["ligand"]
-matrixes_lig_train=np.load("./all_datasets/MUV/training_matrix.npz")["ligand"]
-target_val=np.load("./all_datasets/MUV/target_val.npy")
+matrixes_pock_val=np.load("./datasets_and_RFs/MUV_validation_matrix.npz")["pocket"]
+matrixes_pock_train=np.load("./datasets_and_RFs/MUV_training_matrix.npz")["pocket"]
+matrixes_lig_val=np.load("./datasets_and_RFs/MUV_validation_matrix.npz")["ligand"]
+matrixes_lig_train=np.load("./datasets_and_RFs/MUV_training_matrix.npz")["ligand"]
+target_val=np.load("./datasets_and_RFs/MUV_target_val.npy")
 
 net_ligand = SimpleNetwork(
     irreps_in="9x0e",
@@ -678,14 +678,14 @@ net_ligand = SimpleNetwork(
 min_val_filename_ligand="batch_size=128_activation_func_mlp_cmap=ELU_activation_func_mlp_atoms=ELU_n_nodes_mlp_cmap=500_n_nodes_mlp_atoms=1_n_layers_mlp_cmap=3_n_layers_mlp_atoms=1_max_radius_e3nn=1.0_n_layers_e3nn=3_lmax_e3nn=3_mul_e3nn=8_wd=0.0_n_epochs=200_constant=1.0"
 net_r_ligand = Autoencoder_cmap(net_ligand, 30, 9, 128, "ELU", 500, 3, device)
 net_r_ligand.load_state_dict(torch.load("./equivariant_autoencoder/"+min_val_filename_ligand+"/model_val.pt", map_location=torch.device(device)))
-my_set_for_filter_ligand=np.load("./all_datasets/filters_names_bins/my_set_for_filter_lig.npy")
-my_filter_ligand=np.load("./all_datasets/filters_names_bins/my_filter_lig.npy", allow_pickle=True)
-Name_list=np.load("./all_datasets/filters_names_bins/name_ligand.npy")
-Bins_list=np.load("./all_datasets/filters_names_bins/bins_ligand.npy")
+my_set_for_filter_ligand=np.load("./datasets_and_RFs/filters_names_bins_my_set_for_filter_lig.npy")
+my_filter_ligand=np.load("./datasets_and_RFs/filters_names_bins_my_filter_lig.npy", allow_pickle=True)
+Name_list=np.load("./datasets_and_RFs/filters_bins_name_ligand.npy")
+Bins_list=np.load("./datasets_and_RFs/filters_bins_ligand.npy")
 num_bins=40
 
 
-Muv_pocket=np.load("./all_datasets/MUV/Muv_pockets.npy",allow_pickle=True).item()
+Muv_pocket=np.load("./datasets_and_RFs/Muv_pockets.npy",allow_pickle=True).item()
 
 pock_init=0
 pock_finish=3000
@@ -754,9 +754,9 @@ print("and tested on PDBbind")
 
 num_bins=4
 
-train_dataset_BindingDB=np.load("./all_datasets/Binding_DB/training_matrix_BindingDB_4_bins.npz")
+train_dataset_BindingDB=np.load("./datasets_and_RFs/training_matrix_BindingDB_4_bins.npz")
 train_pock_BindingDB=train_dataset_BindingDB["pocket"]
-train_dataset_BindingDB=np.load("./all_datasets/Binding_DB/training_matrix.npz")
+train_dataset_BindingDB=np.load("./datasets_and_RFs/Binding_DB_training_matrix.npz")
 
 train_lig_BindingDB=train_dataset_BindingDB["ligand"]
 
@@ -774,9 +774,9 @@ for i in range(len(train_pock_BindingDB)):
     #names_pdb_all.append(train_lig_name_pdb[i])
     
     
-val_dataset_BindingDB=np.load("./all_datasets/Binding_DB/validation_matrix_BindingDB_4_bins.npz")
+val_dataset_BindingDB=np.load("./datasets_and_RFs/validation_matrix_BindingDB_4_bins.npz")
 val_pock_BindingDB=val_dataset_BindingDB["pocket"]
-val_dataset_BindingDB=np.load("./all_datasets/Binding_DB/validation_matrix.npz")
+val_dataset_BindingDB=np.load("./datasets_and_RFs/Binding_DB_validation_matrix.npz")
 val_lig_BindingDB=val_dataset_BindingDB["ligand"]
 #val_lig_name_pdb=np.load("../dataset_latent_space_BindingDB/ligand_name_val.npy")
 
@@ -793,7 +793,7 @@ from sklearn import svm
 
 RF = RandomForestClassifier()
 #with open('./RF_NoRep_funziona/rf_val_NoRep', 'rb') as f:
-with open("./final_random_forests/Best_DUDE_on_BindingDB_4bins/rf_val_NoRep", "rb") as f:
+with open("./datasets_and_RFs/final_random_forests_Best_DUDE_on_BindingDB_4bins_rf_val_NoRep", "rb") as f:
 #with open('regressor_models/RF_NoRep/rf_val_NoRep', 'rb') as f:
     RF = cPickle.load(f)
     
@@ -822,7 +822,7 @@ print(f"True positive rate total = {Correct_values/(Correct_values+False_values)
 from sklearn.metrics import confusion_matrix
 confusion_matrix(np.ones_like(y_pred_BindingDB), y_pred_BindingDB)
 
-my_filter_lig=np.load("./all_datasets/Binding_DB/my_filter_lig.npy",allow_pickle=True)
+my_filter_lig=np.load("./datasets_and_RFs/Binding_DB_my_filter_lig.npy",allow_pickle=True)
 my_filter_lig.item()
 
 atoms_mass={}
@@ -839,14 +839,14 @@ atoms_mass["P"]=30.973762
 
 
 
-train_dataset_BindingDB=np.load("./all_datasets/Binding_DB/training_matrix_BindingDB_4_bins.npz")
+train_dataset_BindingDB=np.load("./datasets_and_RFs/training_matrix_BindingDB_4_bins.npz")
 train_pock_BindingDB=train_dataset_BindingDB["pocket"]
-train_dataset_BindingDB=np.load("./all_datasets/Binding_DB/training_matrix.npz")
+train_dataset_BindingDB=np.load("./datasets_and_RFs/Binding_DB_training_matrix.npz")
 train_lig_BindingDB=train_dataset_BindingDB["ligand"]
 
-train_lig_name_pdb=np.load("./all_datasets/Binding_DB/ligand_name_train.npy")
+train_lig_name_pdb=np.load("./datasets_and_RFs/Binding_DB_ligand_name_train.npy")
 
-train_dataset_latent=np.load("./all_datasets/Binding_DB/train_dataset.npz")
+train_dataset_latent=np.load("./datasets_and_RFs/Binding_DB_train_dataset.npz")
 name_train=train_dataset_latent["nam_ligand"]
 
 #target_train_DUDE=np.load("../dataset_latent_space_BindingDB/target_train.npy")
@@ -868,14 +868,14 @@ for i in range(len(train_pock_BindingDB)):
     #names_pdb_all.append(train_lig_name_pdb[i])
     
     
-val_dataset_BindingDB=np.load("./all_datasets/Binding_DB/validation_matrix_BindingDB_4_bins.npz")
+val_dataset_BindingDB=np.load("./datasets_and_RFs/validation_matrix_BindingDB_4_bins.npz")
 val_pock_BindingDB=val_dataset_BindingDB["pocket"]
-val_dataset_BindingDB=np.load("./all_datasets/Binding_DB/validation_matrix.npz")
+val_dataset_BindingDB=np.load("./datasets_and_RFs/Binding_DB_validation_matrix.npz")
 val_lig_BindingDB=val_dataset_BindingDB["ligand"]
-val_lig_name_pdb=np.load("./all_datasets/Binding_DB/ligand_name_val.npy")
+val_lig_name_pdb=np.load("./datasets_and_RFs/Binding_DB_ligand_name_val.npy")
 
 
-val_dataset_latent=np.load("./all_datasets/Binding_DB/val_dataset.npz")
+val_dataset_latent=np.load("./datasets_and_RFs/Binding_DB_val_dataset.npz")
 name_val=val_dataset_latent["nam_ligand"]
 
 
@@ -894,7 +894,7 @@ from sklearn import svm
 
 RF = RandomForestClassifier()
 #with open('./RF_NoRep_funziona/rf_val_NoRep', 'rb') as f:
-with open("./final_random_forests/Best_DUDE_on_BindingDB_4bins/rf_val_NoRep", "rb") as f:
+with open("./datasets_and_RFs/final_random_forests_Best_DUDE_on_BindingDB_4bins_rf_val_NoRep", "rb") as f:
 #with open('regressor_models/RF_NoRep/rf_val_NoRep', 'rb') as f:
     RF = cPickle.load(f)
     

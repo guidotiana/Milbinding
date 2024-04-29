@@ -1,5 +1,5 @@
 import numpy as np
-import os
+#import os
 from tqdm import tqdm
 import random
 
@@ -100,14 +100,14 @@ def get_ligand_from_name(name_now):
     )
     min_val_filename_ligand="batch_size=128_activation_func_mlp_cmap=ELU_activation_func_mlp_atoms=ELU_n_nodes_mlp_cmap=500_n_nodes_mlp_atoms=1_n_layers_mlp_cmap=3_n_layers_mlp_atoms=1_max_radius_e3nn=1.0_n_layers_e3nn=3_lmax_e3nn=3_mul_e3nn=8_wd=0.0_n_epochs=200_constant=1.0"
     net_r_ligand = Autoencoder_cmap(net_ligand, 30, 9, 128, "ELU", 500, 3, device)
-    net_r_ligand.load_state_dict(torch.load(os.path.join("./equivariant_autoencoder",min_val_filename_ligand,"model_val.pt"), map_location=torch.device(device)))
+    net_r_ligand.load_state_dict(torch.load("./equivariant_autoencoder/"+min_val_filename_ligand+"/model_val.pt", map_location=torch.device(device)))
 
-    Name_list=np.load("./all_datasets/filters_names_bins/name_ligand.npy")
-    Bins_list=np.load("./all_datasets/filters_names_bins/bins_ligand.npy")
+    Name_list=np.load("./datasets_and_RFs/name_ligand.npy")
+    Bins_list=np.load("./datasets_and_RFs/bins_ligand.npy")
     num_bins=40
 
     
-    pdb = md.load_pdb(os.path.join('./all_datasets/MUV/Select_pocket', name_now, 'ligandDEF.pdb'))
+    pdb = md.load_pdb("./datasets_and_RFs/"+name_now+".pdb")
     data=pdb.xyz
     atom_type=[]
     for atom in pdb.topology.atoms:
@@ -119,8 +119,8 @@ def get_ligand_from_name(name_now):
         else:
             atom_type.append(atom.name[0:1])
         
-    my_set_for_filter_ligand=np.load("./all_datasets/filters_names_bins/my_set_for_filter_lig.npy")
-    my_filter_ligand=np.load("./all_datasets/filters_names_bins/my_filter_lig.npy", allow_pickle=True)
+    my_set_for_filter_ligand=np.load("./datasets_and_RFs/filters_names_bins_my_set_for_filter_lig.npy")
+    my_filter_ligand=np.load("./datasets_and_RFs/filters_names_bins_my_filter_lig.npy", allow_pickle=True)
     pos = torch.from_numpy(data)
     pos = pos.to(torch.float32)
     x = torch.zeros(len(atom_type), len(my_set_for_filter_ligand))
