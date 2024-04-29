@@ -13,3 +13,4 @@ pip install e3nn
 pip install torch-cluster 
 pip install torch-scatter 
 pip install mdtraj
+pip install notebook
