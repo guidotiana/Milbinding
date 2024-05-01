@@ -11,5 +11,11 @@ Welcome to Milbinding. This repository aims to provide scripts for reproducing t
 We provide a script for installing all the (python) libraries required to use our equivariant graph autoencoder via Anaconda. After activating your base environment, type in your terminal:
 
 `$ ./install_packages_OSX.sh` if your operating system is macOS
+
 `$ ./install_packages_LINUX.sh` if your operating system is Linux
+
+The script will create a conda environment named *Milbinding* which contains all the dependencies to reproduce our results and to use our equivariant graph autoencoder. You can activate the environment by typing:
+
+`$ conda activate Milbinding`
+
 
