@@ -1,7 +1,7 @@
 #!/bin/bash
 source ~/.bashrc
 conda create -y --name Milbinding
-conda activate Milbinding
+source activate Milbinding
 conda install -y python=3.10.9
 conda install -y numpy=1.22.3
 pip install scikit-learn
