@@ -40,4 +40,4 @@ N.B. It can happen that by running the _Reproduce_Results.py_ python script, the
 # Tutorial
 
 In this Repository, we also provide a Tutorial on how to use our trained equivariant graph encoder to obtain the encoded matrixes (fingerprints) discussed in the paper.
-We also show how to use the trained Random Forest to make a binding prediction between a ligand and a pocket using the encoded matrixes. The tutorial might be found in the _Milbinding.ipynb_ notebook
+We also show how to use the trained Random Forest to make a binding prediction between a ligand and a pocket using the encoded matrixes. The tutorial can be found in the _Milbinding.ipynb_ notebook.
