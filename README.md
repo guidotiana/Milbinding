@@ -37,3 +37,7 @@ This Python script will display in the terminal our main results and will save i
 
 N.B. It can happen that by running the _Reproduce_Results.py_ python script, the execution fails due to some files not being found in the _datasets_and_RFs_ folder. This could be related to some failures in downloading all the files from the UNIMI Datavers using the provided bash script _download_datas.sh_. To fix this, we recommend visiting the following website (https://dataverse.unimi.it/dataset.xhtml?persistentId=doi:10.13130/RD_UNIMI/5879ZG), manually downloading the missing files and moving them into the _datasets_and_RFs_ folder.
 
+# Tutorial
+
+In this Repository, we also provide a Tutorial on how to use our trained equivariant graph encoder to obtain the encoded matrixes (fingerprints) discussed in the paper.
+We also show how to use the trained Random Forest to make a binding prediction between a ligand and a pocket using the encoded matrixes. The tutorial might be found in the _Milbinding.ipynb_ notebook
