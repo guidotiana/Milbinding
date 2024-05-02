@@ -33,4 +33,7 @@ With the Milbinding conda environment activated, the results published in the pa
 
 `$ python Reproduce_Results.py`
 
+This Python script will display in the terminal our main results and will save in the folder _images_results_ all the figures reported in the paper with their relative results.
+
+N.B. It can happen that by running the _Reproduce_Results.py_ python script, the execution fails due to some files not being found in the _datasets_and_RFs_ folder. This could be related to some failures in downloading all the files from the UNIMI Datavers using the provided bash script _download_datas.sh_. To fix this, we recommend visiting the following website (https://dataverse.unimi.it/dataset.xhtml?persistentId=doi:10.13130/RD_UNIMI/5879ZG), manually downloading the missing files and moving them into the _datasets_and_RFs_ folder.
 
