@@ -21,10 +21,11 @@ The script will create a conda environment named *Milbinding* which contains all
 
 2. Datasets for reproducing results
 
-Once the Milbinding conda environment is installed, the datasets and the trained models can be downloaded. To download the files and models, use the provided bash script by typing in the terminal:
+Once the Milbinding conda environment is installed, the datasets and the trained models can be downloaded. Typer in your terminal:
 
 `$ download_datas.sh`
 
+This bash script will automatically download all the datasets and trained models from the UNIMI Datavers. All the datasets and trained models are saved into the folder _datasets_and_RFs_ 
 
 
 
