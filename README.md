@@ -19,3 +19,12 @@ The script will create a conda environment named *Milbinding* which contains all
 `$ conda activate Milbinding`
 
 
+2. Datasets for reproducing results
+
+Once the Milbinding conda environment is installed, the datasets and the trained models can be downloaded. To download the files and models, use the provided bash script by typing in the terminal:
+
+`$ download_datas.sh`
+
+
+
+
