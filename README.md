@@ -41,3 +41,5 @@ N.B. It can happen that by running the _Reproduce_Results.py_ python script, the
 
 In this Repository, we also provide a Tutorial on how to use our trained equivariant graph encoder to obtain the encoded matrixes (fingerprints) discussed in the paper.
 We also show how to use the trained Random Forest to make a binding prediction between a ligand and a pocket using the encoded matrixes. The tutorial can be found in the _Milbinding.ipynb_ notebook.
+
+The two pdb files used in the tutorial are already saved in the _pdbs_tutorial_ folder: the two files are the ligand and the pocket from the 1RKP pdb structure and are selected as the 30 heavy atoms of the protein closest to the ligand, and the ligand itself.
