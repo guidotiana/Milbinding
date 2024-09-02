@@ -14,7 +14,7 @@ We provide a script for installing all the (python) libraries required to use ou
 
 `$ ./install_packages_LINUX.sh` if your operating system is Linux
 
-The script will create a conda environment named *Milbinding* which contains all the dependencies to reproduce our results and to use our equivariant graph autoencoder. You can activate the environment by typing:
+The script will create a conda environment named *Milbinding* which contains all the dependencies to reproduce our results and to use our equivariant graph autoencoder. The parameters of the model you will download below are compatible with sklearn 1.2.2; if you have a newer version already installed, you have to downgrade it. You can activate the environment by typing:
 
 `$ conda activate Milbinding`
 
