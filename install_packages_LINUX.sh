@@ -4,6 +4,7 @@ conda create -y --name Milbinding
 source activate Milbinding
 conda install -y python=3.10.9
 conda install -y numpy=1.22.3
+# scikit-learn version 1.2.2
 pip install scikit-learn
 conda install -y matplotlib=3.7.1
 conda install -y seaborn
